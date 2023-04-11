@@ -1,0 +1,180 @@
+Pertemuan 1 ============================================================
+
+Perkenalan aplikasi yang akan di developed
+
+Apa yang akan dipelajari?
+- Login & Registrasi
+- User Access Level ==> mengeloal akses apakah admin atau member?
+- Menu Management ==> Admin bisa menambahkan menu baru dan menu itu dipasangkan oleh member tertentu
+- User Management ==> ganti profil, ganti password, ganti username
+- User Activation ==> setelah Registrasi harus diaktifkan melalui tautan email agar bisa Login
+supaya email sudah valid dan mencegah robot masuk ke halaman 
+- Forgot password ==> Fasilitas Lupa Password
+
+Yang disiapkan 
+1. CodeIgniter 3
+2. Bootstrap versi 4
+3. SBadmin ==> Template Admin
+4. Fontawesome
+
+
+Pertemuan 2 =============================================================
+
+Mendownload  
+1. CodeIgniter 3
+2. Bootstrap versi 4
+3. SBadmin ==> Template Admin
+4. Fontawesome
+
+
+Action :
+1. Config setup CodeIgniter3
+2. Merapikan tampilan login dan registrasi
+
+
+
+Pertemuan 3 =============================================================
+Membuat feature Registration
+
+1. Membuat database dan membuat table di phpmyadmin ==> dengan nama 
+2. Form_Validation untuk mengecek form apakah sesuai yang diisi oleh client harus menaati aturan
+3. Penggunaan Flashdata untuk menampilan flashmessage jika sudah berhasil registrasi
+
+
+Pertemuan 4 =============================================================
+Membuat feature Login
+
+1. Membuat database dan membuat table di phpmyadmin ==> dengan nama 
+2. Form_Validation untuk mengecek form apakah sesuai yang diisi oleh client harus menaati aturan
+3. Penggunaan Flashdata untuk menampilan flashmessage jika sudah berhasil registrasi
+4. Membuat private function login() untuk validasi data di database.
+5. Membuat logika perkondisian untuk validasi dan jika email dan password benar maka data akan disimpan di session 
+dan diredirect ke class user
+6. Class user memanggil data yang diinput pada saat login dan data tersebut dikirimkan melalui session
+
+
+
+Pertemuan 5 =============================================================
+Membuat feature user & admin page!
+
+1. Membuat Tampilan Admin & User
+2. Merapikan / Memecah untuk bagian footer dan header yaitu ada header, footer, sidebar, topbar
+4 Membuat perkondisian untuk memisahkan tampilan admin dan user
+
+
+Pertemuan 6 =============================================================
+membuat Sistem Login Lengkap dengan CodeIgniter3
+
+Membuat Feature Management yaitu menampilakan menu-menu yang ada di user
+
+1. Memuat Table untuk sidebar agar sidebarnya bisa lebih dinamis
+2. Menghubungkan table antara table role_id supaya login menggunakan akses admin akan menampilakan submenu admin dan sebaliknya juga untuk user
+3. Menampilkan sidebar menggunakan foreach (mengambil data dari database)
+
+
+Pertemuan 7 ============================================================
+Menu Management lanjutan dari pertemuan 6 
+
+Menambahkan field bernama Menu di table user_menu ==> untuk menangani controller baru nantinya
+Join Table
+Membuat Sidebar Automatis dengan CRUD yang ada di Table role Admin
+
+
+Pertemuan 8 ============================================================
+User Access = Mengakses sebuah halaman yang ada dimethod sesuai dengan akses yang kita tentukan
+admin bisa akses a sedangkan member bisa mengakses b gitu!
+
+1. Memblok akses user agar tidak bisa ke role akses administrator
+Solusinya yaitu menggunakan helper(function yang kita bikin sendiri dan bukan merupakan dari codeIgniter tetapi bisa dipanggil dimana akan dibutuhkan)
+
+- Membuat helper di folder helpder kemudian format file berikan namafile_helper.php ==> wajib ya!
+- Run Helper yang kita buat di folder config lalu di autoload.php cari helper
+$autoload['helper'] = array('url', 'file', 'security', 'logged'); ==> seperti ini!
+
+2. Sesudah login lalu logout, kemudian kita mengakses controller menu di url yang terjadi adalah error database. Berhasil masuk namun ada keterangan errornya(karena kita login membutuhkan session sehingga terjadi error tersebut).
+Solusinya :
+tambahakan ini ditiap" controllernya!
+// method construct
+    public function __construct(){
+        parent::__construct();
+        // cek jika user belum login
+        if(!$this->session->userdata('email')){
+            //redirect atau tentang ke halaman login
+            redirect('auth');
+        }
+    }
+
+
+Pertemuan 9 ==========================================================
+Access Management
+
+Bagiaman kita mengelol akses stiap role rle yang kita bseua sebelumnya 'admin dan member'
+nambah role adad diretntor 
+
+jadi tiap role itu memiliki menu askes yang berbeda ya 
+
+akses masih menggunakan databae yaitu php admin
+agar adimn bisa mengelola akses menggunakan menu! buat nanti logikanya ya!
+
+
+
+1. Memperbaiki sidebar yang terlalu mepet dengan menu-menu lainnya
+
+
+penggunaan ajak untuk insert dan delele pada checkbox ==> menggunakan Jquery
+
+
+
+Pertemuan 10 ========================================================
+Edit Profile
+
+Edit profil seperti profil nama dll
+
+
+memperbaiki jika sudah login tidak boleh lagi ke auth
+
+        //  jika sudah login maka tidak bisa mengakses halaman login lagi melalui url
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+ taruh code itu di index dan di registrasi
+
+
+ Memperbaiki control user -> edit
+
+Update data edit profil dan upload file gambar menggunakan teknologi CI 3 file upload Class
+-> setting preferences
+
+
+
+Pertemuan 11 ========================================================
+Change Password Untuk User
+
+Action : 
+1. Membuat submenu bernama "ChangePassword" dengan jenis MENU 
+2. Mengarahkan ke controller user dan method ChangePassword
+
+
+Aturannya membuat ChangePassword
+1. User harus memasukan password yang sekarang 
+2. Memasukan password baru dan konfirmasi password barunya!
+ 
+ Logika : 
+ 1. Password baru tidak boleh sama dengan Pasword yang sekarang
+ 2. Password yang sekarang harus wajib dimasukan jika tidak sama dengan database maka error
+ 3. jika sudah sesuai dengan logika 1 dan 2 maka boleh ganti password dengan query update->where. Password harus di diterjemah dulu oleh password verify dan di enkripsi oleh password_hash
+
+
+ Pertemuan 12 ========================================================
+ User Activation 
+
+ Membuat User_Activation pada saat Registrasi melalui email(Feauture SMTTP) ==> membuat feature ini akan menyebabkan email kita tidak aman karena kita menggunakan aplikasi dari pihak ketiga agar bisa terhubung dengan gmail
+
+
+ action : 
+ 1.  aktifasi gmail menggunakan third-party apps
+
+ 
+ 2. membuat method class private bernama _sendEmail ==> registrasi method di class Auth.php
+
+ 3.Email Class yang ada di documentasi di codeIgniter ==> dokumentasi untuk menggunakan email di CI3 (Email Class)
