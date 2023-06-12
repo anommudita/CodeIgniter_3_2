@@ -100,12 +100,10 @@ class User extends CI_Controller
                     echo $this->upload->display_errors();
                 }
 
-
             }
 
             // update table user
             $this->db->update('user', ['name' => $name], ['email' => $email]);
-
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Your profile has been updated!</div>');
 
